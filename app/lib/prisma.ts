@@ -1,20 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
+export const prisma =
+  globalForPrisma.prisma ?? new PrismaClient();
 
-let prisma : PrismaClient;
-
-const globalForPrisma = global as unknown as {
-    prisma: PrismaClient | undefined
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
 }
 
-if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient()
-}
-
-prisma = globalForPrisma.prisma
-
-//シングルトンという考えかたに基づいた考えかた
-
-export default prisma
-
+export default prisma;
