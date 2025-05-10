@@ -19,6 +19,34 @@ const {data: session} = useSession()
 const user = session?.user
 const router = useRouter()
 
+const stripeCheckout = async () =>{
+
+  try {
+    const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/checkout`,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify({
+        title: book.title,
+        price: book.price
+      })
+    })
+
+    
+
+    const responseData = await response.json()
+    if (responseData) {
+      console.log(responseData.checkout_url)
+      router.push(responseData.checkout_url)
+    }
+
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
   const handleCancel = () =>{
    
     setShowmodal(false)
@@ -35,9 +63,11 @@ const router = useRouter()
     if (!user) {
      setShowmodal(false)
      router.push("/login")
-     //to login page
+    
     }else{
       //to Stripe 
+     stripeCheckout()
+
     }
   }
   
