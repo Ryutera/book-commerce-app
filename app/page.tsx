@@ -3,6 +3,7 @@
 
 import Book from "./components/Book"
 import { getAllBooks } from "./lib/microcms/client";
+import { BookType } from "./types/BookType";
 
 // fake data
 // const books = [
@@ -65,7 +66,7 @@ console.log(contents)
         <h2 className="text-center w-full font-bold text-3xl mb-2">
           Book Commerce
         </h2>
-        {contents.map((book:any) => (
+        {contents.map((book:BookType) => (
           <Book key={book.id} book={book} />
         ))}
       </main>

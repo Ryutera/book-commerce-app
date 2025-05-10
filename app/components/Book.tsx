@@ -1,10 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { BookType } from "../types/BookType";
 
+
+type BookProps = {
+  book:BookType
+}
 
 // eslint-disable-next-line react/display-name
-const Book = ({ book }: any) => {
+const Book = ({ book }: BookProps) => {
   return (
     <>
       {/* アニメーションスタイル */}
@@ -36,8 +41,8 @@ const Book = ({ book }: any) => {
           />
           <div className="px-4 py-4 bg-slate-100 rounded-b-md">
             <h2 className="text-lg font-semibold">{book.title}</h2>
-            <p className="mt-2 text-lg text-slate-600">Price is ○○...</p>
-            <p className="mt-2 text-md text-slate-700">Price：{book.price}</p>
+            <p className="mt-2 text-lg text-slate-600">Price is £{book.price}</p>
+            <p className="mt-2 text-md text-slate-700">Price：£{book.price}</p>
           </div>
         </a>
 
