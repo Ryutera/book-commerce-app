@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 
 const PurchaseSuccess = () => {
+const [bookUrl, setBookUrl ] = useState(null)
   const searchPrams = useSearchParams();
   const sessionId = searchPrams.get("session_id");
+
 
 useEffect(()=>{
 const fetchData = async ()=>{
@@ -17,7 +19,10 @@ const fetchData = async ()=>{
                 {method:"POST", headers:{"Content-Type": "application/json"}, body:JSON.stringify({sessionId})}
             )
 
-            console.log(res.json())
+            // console.log(await res.json())
+            const data = await res.json()
+            setBookUrl(data.purchase.bookId)
+
         } catch (error) {
             console.error(error)
         }
@@ -40,7 +45,7 @@ fetchData()
         </p>
         <div className="mt-6 text-center">
           <Link
-            href={`/`}
+            href={`/book/${bookUrl}`}
             className="text-indigo-600 hover:text-indigo-800 transition duration-300"
           >
             Read the article you purchased

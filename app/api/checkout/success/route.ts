@@ -9,12 +9,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST (request:Request, response:Response){
 
+
     const {sessionId} = await request.json()
+
  
 
     try {
 // セッションのメタデータをsessionIdから取得する
         const session = await stripe.checkout.sessions.retrieve(sessionId)
+
+
 
 const existingPurchase = await prisma.purchase.findFirst({
     where:{
@@ -31,7 +35,7 @@ if (!existingPurchase) {
         } 
     })
 
-    return NextResponse.json(purchase)
+    return NextResponse.json({purchase})
 }else{
     return NextResponse.json({message : "already purchased"})
 }
