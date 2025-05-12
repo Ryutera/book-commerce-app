@@ -16,3 +16,13 @@ export const getAllBooks = async () =>{
     return allbooks
 }
 
+
+export const getDetailBook = async (contentId:string)=>{
+  const detailbook = await client.getListDetail<BookType>({
+    endpoint: "bookcommerce",
+    contentId,
+  })
+
+  return detailbook
+
+}
