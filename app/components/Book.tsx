@@ -1,23 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { BookType } from "../types/BookType";
+import { BookType, User } from "../types/BookType";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 type BookProps = {
   book: BookType;
+  isPurchased: boolean
 };
 
 // eslint-disable-next-line react/display-name
-const Book = ({ book }: BookProps) => {
+const Book = ({ book,isPurchased }: BookProps) => {
   const [showModal, setShowmodal] = useState(false);
   const { data: session } = useSession();
-  const user:any = session?.user;
+  //userが存在する時だけUserの型がつく
+  const user = session?.user as User;
   const router = useRouter();
-  console.log(user?.id)
-  console.log(book.id)
+  // console.log(user?.id)
+  // console.log(book.id)
 
   const stripeCheckout = async () => {
     try {
@@ -31,7 +33,7 @@ const Book = ({ book }: BookProps) => {
           body: JSON.stringify({
             title: book.title,
             price: book.price,
-           userId: user?.id,
+           userId: user.id,
            bookId: book.id
 
           }),
@@ -54,7 +56,12 @@ const Book = ({ book }: BookProps) => {
   };
 
   const handleOpen = () => {
-    setShowmodal(true);
+    if (isPurchased) {
+      alert("購入済みです")
+    }else{
+      setShowmodal(true);
+    }
+   
     console.log(showModal);
   };
 
