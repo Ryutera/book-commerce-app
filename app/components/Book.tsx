@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 
 type BookProps = {
   book: BookType;
-  isPurchased: boolean
+  isPurchased: boolean;
 };
 
 // eslint-disable-next-line react/display-name
-const Book = ({ book,isPurchased }: BookProps) => {
+const Book = ({ book, isPurchased }: BookProps) => {
   const [showModal, setShowmodal] = useState(false);
   const { data: session } = useSession();
   //userが存在する時だけUserの型がつく
@@ -33,9 +33,8 @@ const Book = ({ book,isPurchased }: BookProps) => {
           body: JSON.stringify({
             title: book.title,
             price: book.price,
-           userId: user.id,
-           bookId: book.id
-
+            userId: user.id,
+            bookId: book.id,
           }),
         }
       );
@@ -57,11 +56,11 @@ const Book = ({ book,isPurchased }: BookProps) => {
 
   const handleOpen = () => {
     if (isPurchased) {
-      alert("購入済みです")
-    }else{
+      alert("購入済みです");
+    } else {
       setShowmodal(true);
     }
-   
+
     console.log(showModal);
   };
 
