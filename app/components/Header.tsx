@@ -8,6 +8,8 @@ const Header = () => {
   const {data:session} = useSession()
   const user = session?.user
 
+
+
   return (
     <header className="bg-slate-600 text-gray-100 shadow-lg">
       <nav className="flex items-center justify-between p-4">

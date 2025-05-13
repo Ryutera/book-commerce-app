@@ -21,7 +21,7 @@ const fetchData = async ()=>{
 
             // console.log(await res.json())
             const data = await res.json()
-            setBookUrl(data.purchase.bookId)
+            setBookUrl(data.purchase?.bookId)
 
         } catch (error) {
             console.error(error)
