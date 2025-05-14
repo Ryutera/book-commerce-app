@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import { NextAuthProvider } from "./lib/next-auth/provider";
+import { Suspense } from "react";
+import LoadingSpinner from "./Loading";
 
 
 const geistSans = Geist({
@@ -32,7 +34,9 @@ export default function RootLayout({
       >
         <NextAuthProvider>
         <Header/>
-        {children}        
+        <Suspense fallback={<LoadingSpinner/>}>
+        {children}    
+        </Suspense>    
         </NextAuthProvider>
         
       </body>
