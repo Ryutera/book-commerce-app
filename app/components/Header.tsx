@@ -1,11 +1,14 @@
-"use client";
-import { signOut, useSession } from "next-auth/react";
+
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { nextAuthOptions } from "../lib/next-auth/options";
 
-const Header = () => {
-  const {data:session} = useSession()
+const Header = async() => {
+  // const {data:session} = useSession()
+  // const user = session?.user
+  const session = await  getServerSession(nextAuthOptions)
   const user = session?.user
 
 
@@ -29,8 +32,8 @@ const Header = () => {
           >
             {user?"Profile" : "Login"}
           </Link>
-
-          {user ? <button className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={()=>signOut({callbackUrl:"/login"})}>Logout</button>:"" }
+{/* onclickを使わずにサーバー側でログアウトを実行する方法 */}
+          {user ? <Link href={"api/auth/signout"} className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" >Logout</Link>:"" }
 
           <Link href={`/profile`}>
             <Image
